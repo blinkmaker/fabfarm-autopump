@@ -9,5 +9,7 @@ Arduino UNO R3
 
 Final setup list of components:
 =
+DS1302 Real Time Clock module
+
 ESP-8266
 
