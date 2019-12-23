@@ -1,7 +1,7 @@
-
 // Example 4 - Receive a number as text and convert it to an int
 
-const byte numChars = 32; //A byte stores an 8-bit unsigned number, from 0 to 255.
+const byte numChars = 15; //A byte stores an 8-bit unsigned number, from 0 to 255.
+//6 characters plus last character for new line character.
 
 char receivedChars[numChars];   // an array to store the received data
 
@@ -23,18 +23,21 @@ void recvWithEndMarker() {
     static byte ndx = 0;  //The static keyword is used to create variables that are visible to only one function. 
     //However unlike local variables that get created and destroyed every time a function is called, static variables persist beyond the function call, 
     //preserving their data between function calls. Variables declared as static will only be created and initialized the first time a function is called.
-    char endMarker = '\n';
+    
+    char endMarker = '\n';  //When you select the "Newline" option a new-line character ('\n') is added at the end of everything you send.
+    //This version of the program reads all the characters into an array until it detects the Newline character as an end marker.
+    
     char rc;
    
     if (Serial.available() > 0) {
         rc = Serial.read();
-
+        
         if (rc != endMarker) {  // the user can terminate the length of the string without reaching maximum
             receivedChars[ndx] = rc;
             ndx++;
-            if (ndx == (numChars - 2)) {
-                //ndx = numChars - 1;
-                receivedChars[(numChars - 1)] = '\0'; // terminate the string. equivalent to newline in IDE Serial Monitor.
+            if (ndx == (numChars - 1)) {
+                receivedChars[(numChars - 1)] = '\0'; // terminate the string with the null character (written '\0')
+                
                 ndx = 0;  // reset for next string input
                 newData = true;
             }
